@@ -23,13 +23,32 @@
 // Graph Styling
 // -------------
 
-h1 {
-    margin: 20px 0;
-}
-
 .graph {
+    margin: 20px 0;
+    text-align: center;
+
     &.active {
+        text-align: left;
         border: 1px solid @grayLighter;
+    }
+
+    .edge {
+        .transition(stroke .15s linear);
+        fill: none;
+        stroke: @grayLight;
+        stroke-width: 1px;
+    }
+
+    .vcircle {
+        .transition(fill .15s linear);
+        stroke: none;
+        fill: @linkColor;
+    }
+
+    .vlabel {
+        .transition(fill .15s linear);
+        fill: @textColor;
+        font-size: 10px;
     }
 }
 

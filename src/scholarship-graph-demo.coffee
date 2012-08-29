@@ -5,6 +5,18 @@ graphSettings =
     vertex_max_radius: 20
     height: 500
 
+graph_metadata = ($el, data) ->
+    if data?
+        $el.data "graphMetadata", data
+    else
+        $el.data "graphMetadata"
+
+graph_data = ($el, data) ->
+    if data?
+        $el.data "graphData", data
+    else
+        $el.data "graphData"
+
 graphDemo = 
     init: (options) ->
         # Merge the options into the default settings. These are global, used
@@ -15,19 +27,18 @@ graphDemo =
         # Processing for each element.
         return @each () ->
             $chart = $(this)
-            data = $chart.data "graphDemo"
+            metadata = graph_metadata $chart
 
-            if !data?
+            if !metadata?
                 console.log "Initializing on element", @
 
                 # Now we calculate the element-specific settings, like the
                 # width. The width is set to the width of the parent of the
                 # element that will house the SVG, less two to allow for the
                 # border. We set it this way to allow for responsive layouts.
-                $chart.data
-                    "graphDemo":
-                        graph_width: $chart.parent().width() - 2
-                        graph_height: graphSettings.height
+                graph_metadata $chart,
+                    graph_width: $chart.parent().width() - 2
+                    graph_height: graphSettings.height
 
                 # If the graph contains an .initiate anchor, change its click
                 # behavior time initiate the run method.
@@ -38,7 +49,13 @@ graphDemo =
         return @each () ->
             # TODO: Add error checking to ensure the element was initialized.
             $chart = $(this)
-            data = $chart.data "graphDemo"
+            metadata = graph_metadata $chart
+            if metadata.running
+                $.error "The graph demo is already running!"
+                return
+            else
+                graph_metadata $chart, running: true
+
             console.log "Running the plugin on element", @
 
             # Remove any initite links inside the graph.
@@ -48,9 +65,100 @@ graphDemo =
             $chart.addClass "active"
 
             # Create the SVG element that is the visualization.
-            d3.select(this).append("svg:svg")
-                .attr("width", data.graph_width)
-                .attr("height", data.graph_height)
+            vis = d3.select(this).append("svg:svg")
+                .attr("width", metadata.graph_width)
+                .attr("height", metadata.graph_height)
+                
+            # TODO add loading indicator
+
+            console.log "Fetching data for element ", @
+            d3.json "demo_graph_data.json", (json) ->
+                edgeIndex = []
+                max_weight = 1
+
+                # Create an index of edges so we can know which nodes are directly connected
+                # to which other nodes. [source,target] = [target,source] 1
+                for e in json.edges
+                    edgeIndex["#{e.source},#{e.target}"] = 1
+                    edgeIndex["#{e.target},#{e.source}"] = 1
+
+                # Create the force-directed graph.
+                graph = d3.layout.force()
+                    .charge(-500)
+                    .linkDistance(graphSettings.vertex_max_radius * 5)
+                    .gravity(.1)
+                    .size([metadata.graph_width,metadata.graph_height])
+                    .nodes(json.vertices)
+                    .links(json.edges)
+
+                graph.on "tick", (v) ->
+                    json.vertices[0].x = metadata.graph_width / 2
+                    json.vertices[0].y = metadata.graph_height / 2
+
+                    vertices.attr "transform", (v) -> 
+                        r = parseInt(d3.select(this.parentNode).select("circle").attr("r"))
+                        x = Math.max(r, Math.min(metadata.graph_width - r, v.x))
+                        y = Math.max(r, Math.min(metadata.graph_height - r, v.y))
+                        v.x = x
+                        v.y = y
+                        "translate(" + x + "," + y + ")"
+
+                    edges.attr "x1", (e) -> e.source.x
+                    edges.attr "x2", (e) -> e.target.x
+                    edges.attr "y1", (e) -> e.source.y
+                    edges.attr "y2", (e) -> e.target.y
+
+                graph.start()
+
+                for v in json.vertices
+                    max_weight = v.weight if v.weight > max_weight
+
+                # Draw all of the edges from the data
+                edges = vis.selectAll("line.link")
+                    .data(json.edges)
+                    .enter().append("svg:line")
+                    .attr("class", "edge")
+                    .attr("x1", (e) -> e.source.x)
+                    .attr("x2", (e) -> e.target.x)
+                    .attr("y1", (e) -> e.source.y)
+                    .attr("y2", (e) -> e.target.y)
+                    .attr("title", (e) -> e.label)
+
+                # Create container nodes for the vertices.
+                vertices = vis.selectAll("g.node")
+                    .data(json.vertices)
+                    .enter().append("svg:g")
+                    .attr("class", "vertex")
+                    .call(graph.drag)
+
+                # Add a circle to the vertices to act as the node.
+                vertices.append("svg:circle")
+                    .attr("class", "vcircle")
+                    .attr("r", (v) -> 
+                        v.weight / max_weight * (graphSettings.vertex_max_radius - graphSettings.vertex_min_radius) + graphSettings.vertex_min_radius
+                    )
+                    .attr("title", (v) -> v.label)
+                    
+                # Add a text label to the vertices.
+                vertices.append("svg:text")
+                    .attr("class", "vlabel")
+                    .attr("dx", (v, i) ->
+                        n = parseFloat(d3.select(this.parentNode).select("circle").attr("r"))
+                        n + 5.0
+                    )
+                    .attr("dy", 5)
+                    .text (v) -> return v.label
+
+                # Now that we're done, store all information back into the data.
+                #graph_data $chart, 
+                #    edgeIndex       : edgeIndex
+                #    raw_vertices    : json.vertices
+                #    raw_edges       : json.edges
+                #    vertices        : vertices
+                #    edges           : edges
+                #    max_weight      : max_weight
+ 
+
 
 $.fn.graphDemo = (method) ->
     # global processing, applies to all elements

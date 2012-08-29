@@ -944,9 +944,57 @@ input[type="submit"].btn.btn-mini {
   *padding-top: 1px;
   *padding-bottom: 1px;
 }
-h1 {
+.graph {
   margin: 20px 0;
+  text-align: center;
 }
 .graph.active {
+  text-align: left;
   border: 1px solid #eeeeee;
+}
+.graph .edge {
+  -webkit-transition: stroke 0.15s linear;
+  -moz-transition: stroke 0.15s linear;
+  -ms-transition: stroke 0.15s linear;
+  -o-transition: stroke 0.15s linear;
+  transition: stroke 0.15s linear;
+  fill: none;
+  stroke: #999999;
+  stroke-width: 1px;
+}
+.graph .vcircle {
+  -webkit-transition: fill 0.15s linear;
+  -moz-transition: fill 0.15s linear;
+  -ms-transition: fill 0.15s linear;
+  -o-transition: fill 0.15s linear;
+  transition: fill 0.15s linear;
+  stroke: none;
+  fill: #0088cc;
+}
+.graph .vlabel {
+  -webkit-transition: fill 0.15s linear;
+  -moz-transition: fill 0.15s linear;
+  -ms-transition: fill 0.15s linear;
+  -o-transition: fill 0.15s linear;
+  transition: fill 0.15s linear;
+  fill: #333333;
+  font-size: 10px;
+}
+.graph .hover .vcircle {
+  fill: #CDA3BE;
+}
+.graph .hover .vlabel {
+  fill: #eeeeee;
+}
+.graph .hover .edge {
+  stroke: #eee;
+}
+.graph .hover .vertex.active .vcircle {
+  fill: #0088cc;
+}
+.graph .hover .vertex.active .vlabel {
+  fill: #333333;
+}
+.graph .hover .edge.active {
+  stroke: #7D9C9F;
 }

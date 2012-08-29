@@ -61,75 +61,75 @@
     "edges": [
         {
             "__comment":"lavoisier --profession--> chemist",
-            "source": 0, target: 4, "label": "profession"
+            "source": 0, "target": 4, "label": "profession"
         },
         {
             "__comment":"laplace --profession--> mathematician",
-            "source": 1, target: 6, "label": "profession"
+            "source": 1, "target": 6, "label": "profession"
         },
         {
             "__comment":"curie --profession--> physicist",
-            "source": 3, target: 5, "label": "profession"
+            "source": 3, "target": 5, "label": "profession"
         },
         {
             "__comment":"monod --profession--> biologist",
-            "source": 2, target: 7, "label": "profession"
+            "source": 2, "target": 7, "label": "profession"
         },
         {
             "__comment":"lavoisier --religion--> roman cath",
-            "source": 0, target: 8, "label": "religion"
+            "source": 0, "target": 8, "label": "religion"
         },
         {
             "__comment":"laplace --religion--> roman cath",
-            "source": 1, target: 8, "label": "religion"
+            "source": 1, "target": 8, "label": "religion"
         },
         {
             "__comment":"monod --religion--> atheism",
-            "source": 2, target: 9, "label": "religion"
+            "source": 2, "target": 9, "label": "religion"
         },
         {
             "__comment":"lav --place_of_birth--> paris",
-            "source": 0, target: 11, "label": "place_of_birth"
+            "source": 0, "target": 11, "label": "place_of_birth"
         },
         {
             "__comment":"lav --place_of_death--> place de la concord",
-            "source": 0, target: 10, "label": "place_of_death"
+            "source": 0, "target": 10, "label": "place_of_death"
         },
         {
             "__comment":"lav --cause_of_death--> decap",
-            "source": 0, target: 12, "label": "cause_of_death"
+            "source": 0, "target": 12, "label": "cause_of_death"
         },
         {
             "__comment":"lav --similar_to--> monod",
-            "source": 0, target: 2, "label": "similar_to"
+            "source": 0, "target": 2, "label": "similar_to"
         },
         {
             "__comment":"lav <--similar_to-- monod",
-            "source": 2, target: 0, "label": "similar_to"
+            "source": 2, "target": 0, "label": "similar_to"
         },
         {
             "__comment":"lav --similar_to--> curie",
-            "source": 0, target: 3, "label": "similar_to"
+            "source": 0, "target": 3, "label": "similar_to"
         },
         {
             "__comment":"lav <--similar_to-- curie",
-            "source": 3, target: 0, "label": "similar_to"
+            "source": 3, "target": 0, "label": "similar_to"
         },
         {
             "__comment":"lav --similar_to--> laplace",
-            "source": 0, target: 1, "label": "similar_to"
+            "source": 0, "target": 1, "label": "similar_to"
         },
         {
             "__comment":"lav <--similar_to-- laplace",
-            "source": 1, target: 0, "label": "similar_to"
+            "source": 1, "target": 0, "label": "similar_to"
         },
         {
             "__comment":"paris --in--> france",
-            "source": 11, target: 13, "label": "located_in"
+            "source": 11, "target": 13, "label": "located_in"
         },
         {
             "__comment":"concorde --in--> france",
-            "source": 10, target: 11, "label": "located_in"
+            "source": 10, "target": 11, "label": "located_in"
         }
     ]
 }
