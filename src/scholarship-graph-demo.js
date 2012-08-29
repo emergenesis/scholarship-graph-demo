@@ -63,7 +63,7 @@ graphDemo = {
       vis = d3.select(this).append("svg:svg").attr("width", metadata.graph_width).attr("height", metadata.graph_height);
       console.log("Fetching data for element ", this);
       return d3.json("demo_graph_data.json", function(json) {
-        var e, edgeIndex, edges, graph, max_weight, v, vertices, _i, _j, _len, _len1, _ref, _ref1;
+        var circles, e, edgeIndex, edges, graph, max_weight, v, vertices, _i, _j, _len, _len1, _ref, _ref1;
         edgeIndex = [];
         max_weight = 1;
         _ref = json.edges;
@@ -98,7 +98,6 @@ graphDemo = {
             return e.target.y;
           });
         });
-        console.log(json);
         graph.start();
         _ref1 = json.vertices;
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
@@ -119,17 +118,30 @@ graphDemo = {
           return e.label;
         });
         vertices = vis.selectAll("g.node").data(json.vertices).enter().append("svg:g").attr("class", "vertex").call(graph.drag);
-        vertices.append("svg:circle").attr("class", "vcircle").attr("r", function(v) {
+        circles = vertices.append("svg:circle").attr("class", "vcircle").attr("r", function(v) {
           return v.weight / max_weight * (graphSettings.vertex_max_radius - graphSettings.vertex_min_radius) + graphSettings.vertex_min_radius;
         }).attr("title", function(v) {
           return v.label;
         });
-        return vertices.append("svg:text").attr("class", "vlabel").attr("dx", function(v, i) {
+        vertices.append("svg:text").attr("class", "vlabel").attr("dx", function(v, i) {
           var n;
           n = parseFloat(d3.select(this.parentNode).select("circle").attr("r"));
           return n + 5.0;
         }).attr("dy", 5).text(function(v) {
           return v.label;
+        });
+        circles.on("mouseover", function(d, i) {
+          vis.classed("hover", true);
+          vertices.classed("active", function(v) {
+            return edgeIndex[d.index + "," + v.index] || edgeIndex[v.index + "," + d.index] || d.index === v.index;
+          });
+          return edges.classed("active", function(e) {
+            return e.source === d || e.target === d;
+          });
+        });
+        return circles.on("mouseout", function() {
+          vis.classed("hover", false);
+          return edges.classed("active", false);
         });
       });
     });

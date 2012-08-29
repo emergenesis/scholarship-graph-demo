@@ -132,7 +132,7 @@ graphDemo =
                     .call(graph.drag)
 
                 # Add a circle to the vertices to act as the node.
-                vertices.append("svg:circle")
+                circles = vertices.append("svg:circle")
                     .attr("class", "vcircle")
                     .attr("r", (v) -> 
                         v.weight / max_weight * (graphSettings.vertex_max_radius - graphSettings.vertex_min_radius) + graphSettings.vertex_min_radius
@@ -148,6 +148,18 @@ graphDemo =
                     )
                     .attr("dy", 5)
                     .text (v) -> return v.label
+
+                
+                # On mouseover of a node's circle, dim all others. Remove on mouseout.
+                circles.on "mouseover", (d, i) ->
+                    vis.classed "hover", true
+                    vertices.classed "active", (v) ->
+                        edgeIndex[d.index + "," + v.index] || edgeIndex[v.index + "," + d.index] || d.index == v.index
+                    edges.classed "active", (e) ->
+                        e.source == d || e.target == d
+                circles.on "mouseout", () ->
+                    vis.classed "hover", false
+                    edges.classed "active", false
 
                 # Now that we're done, store all information back into the data.
                 #graph_data $chart, 

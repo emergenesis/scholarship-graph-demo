@@ -33,22 +33,50 @@
     }
 
     .edge {
-        .transition(stroke .15s linear);
+        .transition(stroke .25s linear);
         fill: none;
         stroke: @grayLight;
         stroke-width: 1px;
     }
 
     .vcircle {
-        .transition(fill .15s linear);
+        .transition(fill .25s linear);
         stroke: none;
         fill: @linkColor;
     }
 
     .vlabel {
-        .transition(fill .15s linear);
+        .transition(fill .25s linear);
         fill: @textColor;
         font-size: 10px;
+    }
+
+    .hover {
+        .vcircle {
+            fill: lighten(@linkColor, 40%);
+        }
+
+        .vlabel {
+            fill: @grayLight;
+        }
+
+        .edge {
+            stroke: #eee;
+        }
+
+        .vertex.active {
+            .vcircle {
+                fill: @linkColor;
+            }
+
+            .vlabel {
+                fill: @textColor;
+            }
+        }
+
+        .edge.active {
+            stroke: @grayLight;
+        }
     }
 }
 
