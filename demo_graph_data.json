@@ -1,0 +1,136 @@
+{
+    "vertices": [
+        {
+            "__comment":"00",
+            "label": "Antoine-Laurent de Lavoisier"
+        },
+        {
+            "__comment":"01",
+            "label": "Pierre-Simon Laplace"
+        },
+        {
+            "__comment":"02",
+            "label": "Jacques Monod"
+        },
+        {
+            "__comment":"03",
+            "label": "Pierre Curie"
+        },
+        {
+            "__comment":"04",
+            "label": "Chemist"
+        },
+        {
+            "__comment":"05",
+            "label": "Physicist"
+        },
+        {
+            "__comment":"06",
+            "label": "Mathematician"
+        },
+        {
+            "__comment":"07",
+            "label": "Biologist"
+        },
+        {
+            "__comment":"08",
+            "label": "Roman Catholicism"
+        },
+        {
+            "__comment":"09",
+            "label": "Atheism"
+        },
+        {
+            "__comment":"10",
+            "label": "Place de la Concorde"
+        },
+        {
+            "__comment":"11",
+            "label": "Paris"
+        },
+        {
+            "__comment":"12",
+            "label": "Decapitation"
+        },
+        {
+            "__comment":"13",
+            "label": "France"
+        }
+    ],
+
+    "edges": [
+        {
+            "__comment":"lavoisier --profession--> chemist",
+            "source": 0, target: 4, "label": "profession"
+        },
+        {
+            "__comment":"laplace --profession--> mathematician",
+            "source": 1, target: 6, "label": "profession"
+        },
+        {
+            "__comment":"curie --profession--> physicist",
+            "source": 3, target: 5, "label": "profession"
+        },
+        {
+            "__comment":"monod --profession--> biologist",
+            "source": 2, target: 7, "label": "profession"
+        },
+        {
+            "__comment":"lavoisier --religion--> roman cath",
+            "source": 0, target: 8, "label": "religion"
+        },
+        {
+            "__comment":"laplace --religion--> roman cath",
+            "source": 1, target: 8, "label": "religion"
+        },
+        {
+            "__comment":"monod --religion--> atheism",
+            "source": 2, target: 9, "label": "religion"
+        },
+        {
+            "__comment":"lav --place_of_birth--> paris",
+            "source": 0, target: 11, "label": "place_of_birth"
+        },
+        {
+            "__comment":"lav --place_of_death--> place de la concord",
+            "source": 0, target: 10, "label": "place_of_death"
+        },
+        {
+            "__comment":"lav --cause_of_death--> decap",
+            "source": 0, target: 12, "label": "cause_of_death"
+        },
+        {
+            "__comment":"lav --similar_to--> monod",
+            "source": 0, target: 2, "label": "similar_to"
+        },
+        {
+            "__comment":"lav <--similar_to-- monod",
+            "source": 2, target: 0, "label": "similar_to"
+        },
+        {
+            "__comment":"lav --similar_to--> curie",
+            "source": 0, target: 3, "label": "similar_to"
+        },
+        {
+            "__comment":"lav <--similar_to-- curie",
+            "source": 3, target: 0, "label": "similar_to"
+        },
+        {
+            "__comment":"lav --similar_to--> laplace",
+            "source": 0, target: 1, "label": "similar_to"
+        },
+        {
+            "__comment":"lav <--similar_to-- laplace",
+            "source": 1, target: 0, "label": "similar_to"
+        },
+        {
+            "__comment":"paris --in--> france",
+            "source": 11, target: 13, "label": "located_in"
+        },
+        {
+            "__comment":"concorde --in--> france",
+            "source": 10, target: 11, "label": "located_in"
+        }
+    ]
+}
+
