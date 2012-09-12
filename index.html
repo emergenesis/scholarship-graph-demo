@@ -21,6 +21,8 @@
                 <div class="span12">
                     <h2>Start From External Button</h2>
                     <a id="externalButton" href="#" class="btn btn-inverse">Start Demonstration</a>
+                    <a id="toggleLinked" href="#" class="btn">Toggle Linked State</a>
+                    <a id="toggleHighlighted" href="#" class="btn">Toggle Highlighted State</a>
                 </div>
             </div>
         </div>
@@ -30,8 +32,17 @@
                 $graph = $(".graph");
                 $graph.graphDemo({});
                 
-                $("#externalButton").click(function() {
+                $("#externalButton").click(function(e) {
+                    e.preventDefault();
                     $graph.graphDemo("run");
+                });
+                $("#toggleLinked").click(function(e) {
+                    e.preventDefault();
+                    $graph.graphDemo("toggleState", "linked");
+                });
+                $("#toggleHighlighted").click(function(e) {
+                    e.preventDefault();
+                    $graph.graphDemo("toggleState", "highlighted");
                 });
             });
         </script>

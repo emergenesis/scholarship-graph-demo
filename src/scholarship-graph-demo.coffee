@@ -169,7 +169,15 @@ graphDemo =
                 #    vertices        : vertices
                 #    edges           : edges
                 #    max_weight      : max_weight
- 
+
+    toggleState: (state) ->
+        # Processing for each element.
+        return @each () ->
+            # TODO: Add error checking to ensure the element was initialized.
+            $chart = $(this)
+            metadata = graph_metadata $chart
+
+            $chart.toggleClass(state)
 
 
 $.fn.graphDemo = (method) ->

@@ -9,14 +9,11 @@
         text-align: left;
         border: 1px solid @grayLighter;
     }
-
+    
     .edge {
-        .transition(stroke .25s linear);
-        fill: none;
-        stroke: @grayLight;
-        stroke-width: 1px;
+        display: none;
     }
-
+    
     .vcircle {
         .transition(fill .25s linear);
         stroke: none;
@@ -28,7 +25,27 @@
         fill: @textColor;
         font-size: 10px;
     }
+}
 
+
+// Graph States
+// ------------
+// Based on the state of the demo, the effects and properties change.
+
+// Linked: The graph's vertices are connected by visible edges.
+.graph.linked {
+    .edge {
+        display: block;
+        .transition(stroke .25s linear);
+        fill: none;
+        stroke: @grayLight;
+        stroke-width: 1px;
+    }
+}
+
+// Highlighted: The connected edges and vertices are highlighted on mouseover
+// of a vertex.
+.graph.highlighted {
     .hover {
         .vcircle {
             fill: lighten(@linkColor, 40%);
@@ -36,10 +53,6 @@
 
         .vlabel {
             fill: @grayLight;
-        }
-
-        .edge {
-            stroke: #eee;
         }
 
         .vertex.active {
@@ -51,9 +64,20 @@
                 fill: @textColor;
             }
         }
+    }
+}
+
+// Linked & Highlighted
+.graph.linked.highlighted {
+    .hover {
+        .edge {
+            stroke: #eee;
+        }
 
         .edge.active {
             stroke: @grayLight;
         }
     }
 }
+
+

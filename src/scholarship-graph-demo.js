@@ -145,6 +145,14 @@ graphDemo = {
         });
       });
     });
+  },
+  toggleState: function(state) {
+    return this.each(function() {
+      var $chart, metadata;
+      $chart = $(this);
+      metadata = graph_metadata($chart);
+      return $chart.toggleClass(state);
+    });
   }
 };
 
