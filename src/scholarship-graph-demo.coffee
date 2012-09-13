@@ -6,10 +6,13 @@ graphSettings =
     height: 500
 
 graph_metadata = ($el, data) ->
-    if data?
-        $el.data "graphMetadata", data
+    key = "graphMetadata"
+
+    if (k for own k of data).length is 0    
+        $el.data key
     else
-        $el.data "graphMetadata"
+        md = $.extend {}, $el.data(key), data
+        $el.data key, md
 
 graph_data = ($el, data) ->
     if data?
@@ -42,9 +45,9 @@ graphDemo =
 
                 # If the graph contains an .initiate anchor, change its click
                 # behavior time initiate the run method.
-                $("a.initiate", $chart).click () -> $chart.graphDemo "run"
+                $("a.initiate", $chart).click () -> $chart.graphDemo "start"
 
-    run: () ->
+    start: () ->
         # Processing for each element.
         return @each () ->
             # TODO: Add error checking to ensure the element was initialized.
@@ -55,6 +58,8 @@ graphDemo =
                 return
             else
                 graph_metadata $chart, running: true
+            console.log metadata
+            console.log graph_metadata($chart)
 
             console.log "Running the plugin on element", @
 
@@ -173,11 +178,17 @@ graphDemo =
     toggleState: (state) ->
         # Processing for each element.
         return @each () ->
-            # TODO: Add error checking to ensure the element was initialized.
             $chart = $(this)
-            metadata = graph_metadata $chart
-
             $chart.toggleClass(state)
+
+    stop: () ->
+        return @each () ->
+            $chart = $(this)
+            console.log $chart.data()
+            graph_metadata $chart,
+                running: false
+            $chart.empty()
+            $chart.removeClass "active linked highlighted"
 
 
 $.fn.graphDemo = (method) ->

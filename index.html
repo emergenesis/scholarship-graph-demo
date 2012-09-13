@@ -12,17 +12,16 @@
             <div class="row">
                 <div class="span12">
                     <h1>Scholarship Graph Demonstration</h1>
-                    <div class="graph">
-                        <a href="#" class="btn initiate">Start Demonstration</a>
-                    </div>
+                    <a id="externalButton" href="#" class="btn btn-inverse">Start Demonstration</a>
+                    <a id="toggleLinked" href="#" class="btn">Toggle Linked State</a>
+                    <a id="toggleHighlighted" href="#" class="btn">Toggle Highlighted State</a>
                 </div>
             </div>
             <div class="row">
                 <div class="span12">
-                    <h2>Start From External Button</h2>
-                    <a id="externalButton" href="#" class="btn btn-inverse">Start Demonstration</a>
-                    <a id="toggleLinked" href="#" class="btn">Toggle Linked State</a>
-                    <a id="toggleHighlighted" href="#" class="btn">Toggle Highlighted State</a>
+                    <div class="graph">
+                        <a href="#" class="btn initiate">Start Demonstration</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,11 +29,25 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $graph = $(".graph");
-                $graph.graphDemo({});
+                $graph.graphDemo();
+                var running = false;
                 
                 $("#externalButton").click(function(e) {
                     e.preventDefault();
-                    $graph.graphDemo("run");
+
+                    if(running) {
+                        running = false;
+                        $(this).text("Start Demonstration");
+                        $graph.graphDemo("stop");
+                    } else {
+                        running = true;
+                        $(this).text("Stop Demonstration");
+                        $graph.graphDemo("start");
+                    }
+                });
+                $(".graph > .btn").click(function(e) {
+                    running = true;
+                    $("#externalButton").text("Stop Demonstration");
                 });
                 $("#toggleLinked").click(function(e) {
                     e.preventDefault();
