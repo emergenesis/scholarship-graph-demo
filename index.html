@@ -12,9 +12,12 @@
             <div class="row">
                 <div class="span12">
                     <h1>Scholarship Graph Demonstration</h1>
-                    <a id="externalButton" href="#" class="btn btn-inverse">Start Demonstration</a>
-                    <a id="toggleLinked" href="#" class="btn">Toggle Linked State</a>
-                    <a id="toggleHighlighted" href="#" class="btn">Toggle Highlighted State</a>
+                    <div class="btn-group">
+                        <a id="externalButton" href="#" class="btn btn-inverse">Start Demonstration</a>
+                        <a id="addDataButton" href="#" class="btn">Add Data</a>
+                        <a id="toggleLinked" href="#" class="btn">Toggle Linked State</a>
+                        <a id="toggleHighlighted" href="#" class="btn">Toggle Highlighted State</a>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -48,6 +51,10 @@
                 $(".graph > .btn").click(function(e) {
                     running = true;
                     $("#externalButton").text("Stop Demonstration");
+                });
+                $("#addDataButton").click(function(e) {
+                    e.preventDefault();
+                    $graph.graphDemo("add", "demo_graph_data.json");
                 });
                 $("#toggleLinked").click(function(e) {
                     e.preventDefault();

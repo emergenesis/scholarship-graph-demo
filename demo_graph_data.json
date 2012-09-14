@@ -1,10 +1,6 @@
 {
     "vertices": [
         {
-            "__comment":"00",
-            "label": "Antoine-Laurent de Lavoisier"
-        },
-        {
             "__comment":"01",
             "label": "Pierre-Simon Laplace"
         },
